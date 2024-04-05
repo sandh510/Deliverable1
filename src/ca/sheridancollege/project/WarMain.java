@@ -1,5 +1,6 @@
 package ca.sheridancollege.project;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -11,17 +12,41 @@ public class WarMain {
         Scanner input = new Scanner(System.in);
 
         // Prompt players to register
-        System.out.print("Enter name for Player 1: ");
-        String player1Name = input.nextLine();
+        String player1Name = getPlayerName(input, "Player 1");
+        String player2Name = getPlayerName(input, "Player 2");
 
-        System.out.print("Enter name for Player 2: ");
-        String player2Name = input.nextLine();
+        // Prompt for round limit
+        int roundLimit = getRoundLimit(input);
 
-        int roundLimit = 10; // Set the round limit
         WarGame warGame = new WarGame(player1Name, player2Name, roundLimit);
         warGame.play();
         warGame.declareWinner();
 
         input.close();
+    }
+
+    private static String getPlayerName(Scanner input, String playerNumber) {
+        System.out.print("Enter name for " + playerNumber + ": ");
+        return input.nextLine();
+    }
+
+    private static int getRoundLimit(Scanner input) {
+        int roundLimit;
+        while (true) {
+            try {
+                System.out.print("Enter round limit: ");
+                roundLimit = input.nextInt();
+                if (roundLimit <= 0) {
+                    throw new IllegalArgumentException("Round limit must be greater than 0.");
+                }
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid integer.");
+                input.nextLine(); // Consume the invalid input
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+        return roundLimit;
     }
 }

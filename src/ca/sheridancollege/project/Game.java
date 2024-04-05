@@ -1,8 +1,3 @@
-/**
- * SYST 17796 Project Base code.
- * Students can modify and extend to implement their game.
- * Add your name as an author and the date!
- */
 package ca.sheridancollege.project;
 
 import java.util.ArrayList;
@@ -10,20 +5,15 @@ import java.util.ArrayList;
 /**
  * The class that models your game. You should create a more specific child of this class and instantiate the methods
  * given.
- *
- * @author Armandepp Singh
- * @author Jasmeen Kaur
- * @author Gurleen Kaur
- * @author Gursirat Singh Jan 2020
  */
 public abstract class Game {
 
-    private final String name;//the title of the game
-    private ArrayList<Player> players;// the players of the game
+    private final String name; // the title of the game
+    private ArrayList<Player> players; // the players of the game
 
     public Game(String name) {
         this.name = name;
-        players = new ArrayList();
+        players = new ArrayList<>();
     }
 
     /**
@@ -41,10 +31,33 @@ public abstract class Game {
     }
 
     /**
-     * @param players the players of this game
+     * Add a player to the game.
+     *
+     * @param player the player to add
      */
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
+    public void addPlayer(Player player) {
+        if (!players.contains(player)) {
+            players.add(player);
+        }
+    }
+
+    /**
+     * Remove a player from the game.
+     *
+     * @param player the player to remove
+     */
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
+
+    /**
+     * Check if a player is already in the game.
+     *
+     * @param player the player to check
+     * @return true if the player is in the game, false otherwise
+     */
+    public boolean hasPlayer(Player player) {
+        return players.contains(player);
     }
 
     /**
